@@ -1,24 +1,18 @@
-#Notes: can't believe this worked immediately. Solution is O(n^2), only one pass through the board is needed.
-#Multiple passes wouldn't change asymptotic runtime but would be lame.
-
-from math import floor
+#O(n^2) time and space. Bitmasking approach is interesting to save O(n) space
 
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        rowSeenList = [set() for i in range(9)]
-        colSeenList = [set() for i in range(9)]
-        boxSeenList = [[set() for i in range(3)] for i in range(3)]
-        for i in range(9): #row
-            for j in range(9): #col
-                num = board[i][j]
-                if num != ".":
-                    rowSeen = rowSeenList[i]
-                    colSeen = colSeenList[j]
-                    boxSeen = boxSeenList[floor(i/3)][floor(j/3)]
-                    if num in rowSeen or num in colSeen or num in boxSeen:
-                        return False
-                    rowSeen.add(num)
-                    colSeen.add(num)
-                    boxSeen.add(num)
+        row_dict = defaultdict(set)
+        col_dict = defaultdict(set)
+        box_dict = defaultdict(set)
+        for i in range(len(board)):
+            for j in range(len(board)):
+                entry = board[i][j]
+                if entry == ".":
+                    continue
+                if entry in row_dict[i] or entry in col_dict[j] or entry in box_dict[(i//3,j//3)]:
+                    return False
+                row_dict[i].add(entry)
+                col_dict[j].add(entry)
+                box_dict[(i//3,j//3)].add(entry)
         return True
-        
