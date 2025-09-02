@@ -1,12 +1,12 @@
-# Was gonna try to do dynamic programming, but i think you can't beat
-#O(n^2) runtime so why waste the space lol
-#Update turns out I forgot that hashmaps exist
-
+# O(n) time, O(n) space
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        for i in range(len(nums)):
-            for j in range(i+1,len(nums)):
-                if nums[i]+nums[j]==target:
-                    return [i,j]
-        return 0
+        vals_to_idx = {}  #map a seen value to its index in nums
+        for i in range(len(nums)): #O(n)
+        diff = target - nums[i] #diff is the number we want in order to sum to target
+            if diff in vals_to_idx: #O(1) per iter
+                return [vals_to_idx[diff],i]
+            vals_to_idx[nums[i]] = i #O(1) per iter
+
+
