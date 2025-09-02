@@ -1,29 +1,15 @@
-#O(nlogn) solution that repurposes previous elements in the array to perform binary search on. I simply
-#did not see the O(n) solution sadly. I am glad I got to do a binary search tho.
-
-from math import floor
+#O(n) time, O(1) space. Two pointers solution
 
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        i = -1 #right bound on BinSearch
-        for j in range(len(numbers)):
-            if (k := self.BinSearch(numbers, i, numbers[j])) != -1:
-                return [k+1, j+1]
-            numbers[j] = target - numbers[j]
-            i = j
-        return [-1,-1]
-
-    def BinSearch(self, numbers: List[int], right_idx: int, target: int) -> int:
-        left_idx = 0
-        while left_idx <= right_idx:
-            mid = floor((left_idx + right_idx)/2)
-            if numbers[mid] == target:
-                return mid
-            elif numbers[mid] < target:
-                right_idx = mid - 1
+        index1 = 0
+        index2 = len(numbers) - 1
+        while index1 != index2:
+            total = numbers[index1] + numbers[index2]
+            if total < target:
+                index1 += 1
+            elif total > target:
+                index2 -= 1
             else:
-                left_idx = mid + 1
-        return -1 
-
-
-
+                return [index1+1, index2+1]
+        return [-1,-1]
