@@ -1,4 +1,4 @@
-#Pretty simple O(n) solution
+#Pretty simple O(n) solution, Unchanged when redoing it
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
